@@ -46,10 +46,8 @@ export async function signIn(req, res){
    
             if (!isAdminPasswordCorrect) return res.status(401).send('Authentication failed, please check your credentials.')
 
-            if (isAdminPasswordCorrect) {
             await db.collection('sessions').insertOne({ token, userId: admin._id });
             return res.status(201).send({token, name: admin.name, userType: "admin"})
-        }
         }
 
         const user = await db.collection('users').findOne({ email });
