@@ -8,17 +8,17 @@ import { db } from '../database/database.connection.js';
 // VALUE EXPORTS
 export async function createOrder(req, res) {
     const {items, total} = req.body;
-    const order = {
-        _id: new ObjectId(),
+    const orderInformation = {
         userId: res.locals.session.userId,
         items,
         total,
         date: dayjs().toISOString(),
     }
     try {
-        await db.collection("orders").insertOne(order);
-        res.status(201).send(order);
-        
+        const order = await db.collection("orders").insertOne(orderInformation);
+        if (order.acknowledged === true){
+            res.status(201).send(order.insertedId);
+        }
     } catch (err) {
         res.status(500).send(err.message);
     }
