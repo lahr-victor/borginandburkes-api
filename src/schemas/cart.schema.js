@@ -13,6 +13,6 @@ export const cartSchema = joi.object(
                 qty: joi.number().positive().greater(0).required(),
             }        
         ),
-        total: joi.number().positive().greater(0).required()
+        total: joi.number().positive().greater(0).required(),
     }
 )
