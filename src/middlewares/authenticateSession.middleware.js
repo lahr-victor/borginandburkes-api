@@ -2,7 +2,7 @@
 import { db } from "../database/database.connection.js";
 
 // VALUE EXPORTS
-export function authenticateSession(userType) {
+export function authenticateSession(allowedUserTypes) {
   return async (req, res, next) => {
     const { authorization } = req.headers;
     const token = authorization?.replace('Bearer ', '');
@@ -10,7 +10,7 @@ export function authenticateSession(userType) {
 
     try {
       const session = await db.collection('sessions').findOne({ token });
-      if ((!session) || (session.userType !== userType)) {
+      if ((!session) || (!allowedUserTypes.includes(session.userType))) {
         return res.sendStatus(401);
       }
 

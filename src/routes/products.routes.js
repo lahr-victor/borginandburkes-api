@@ -11,7 +11,7 @@ import { authenticateSession } from '../middlewares/authenticateSession.middlewa
 const productsRouter = Router();
 
 // FUNCTIONS
-productsRouter.post('/products', authenticateSession('admin'), validateSchema(productsSchema), registerProduct);
+productsRouter.post('/products', authenticateSession(['admin']), validateSchema(productsSchema), registerProduct);
 productsRouter.get('/products', retrieveProducts);
 productsRouter.get('/products/:id', retrieveProductById);
 
